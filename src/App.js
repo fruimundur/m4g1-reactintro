@@ -1,25 +1,19 @@
 import { useState, useEffect } from 'react';
 
 import MovieCard from './MovieCard'; 
-
-import './App.css';
 import SearchIcon from './search.svg';
+import './App.css';
+
+// Importing the API here:
 const API_URL =  'http://www.omdbapi.com?apikey=d1844c4e'; 
 
 
-const movie1 = {
-    "Title": "Harry Potter and the Chamber of Secrets",
-    "Year": "2002",
-    "imdbID": "tt0295297",
-    "Type": "movie",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BMjE0YjUzNDUtMjc5OS00MTU3LTgxMmUtODhkOThkMzdjNWI4XkEyXkFqcGdeQXVyMTA3MzQ4MTc0._V1_SX300.jpg"
-}
-
-
 const App = () => {
+// setting the variables and initial value of useState, which will be called upon further down
     const [movies, setMovies] = useState([]); 
     const [searchTerm, setSearchTerm] =  useState('');
 
+// this block of code fetches data form the API once it's done loading
     const searchMovies = async (title) => {
         const response = await fetch (`${API_URL}&S=${title }`);
         const data = await response.json();
@@ -27,6 +21,7 @@ const App = () => {
         setMovies(data.Search  );
     }
 
+// 'searching' for the Harry Potter movies from the API, so they will be the initial display of movies
     useEffect(() => {
         searchMovies('Harry Potter');
     }, []);
@@ -38,10 +33,14 @@ const App = () => {
             <div className="search">
                 <input
                   placeholder="Search for movies"
-                  value={searchTerm }
+// setting the initial state form the useState on line 14 as the value for the input field
+                  value={searchTerm}
+// adding an onchange event which changes the state/value
                   onChange={(e) => setSearchTerm(e.target.value )}
                 />
                 <img
+// adding an onclick event to the search button
+
                     src={SearchIcon}
                     alt="search icon"
                     onClick={() => searchMovies(searchTerm)}
@@ -49,6 +48,7 @@ const App = () => {
             </div>
 
         {movies?.length > 0
+// if the list of movies is larger than 0, then the MovieCard component will be rendered
             ? (
                 <div className="cointainer">
                     {movies.map((movie) =>  (
@@ -56,6 +56,7 @@ const App = () => {
                     ))}
                 </div>
             ) : (
+// otherwise the 'No movies found' text will be displayed
                 <div className="empty ">
                      <h2>No movies found</h2>
                 </div> 
