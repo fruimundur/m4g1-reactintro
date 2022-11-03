@@ -5,7 +5,7 @@ import SearchIcon from './search.svg';
 import './App.css';
 
 // Importing the API here:
-const API_URL =  'http://www.omdbapi.com?apikey=d1844c4e'; 
+const API_URL =  'https://www.omdbapi.com?apikey=d1844c4e'; 
 
 
 const App = () => {
